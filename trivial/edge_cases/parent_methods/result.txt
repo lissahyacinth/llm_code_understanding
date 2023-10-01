@@ -1,0 +1,6 @@
+"""
+Generate a list of all prime numbers up to n using the Sieve of Eratosthenes algorithm.
+
+Returns:
+    List[int]: List of all prime numbers up to n.
+"""

@@ -1,0 +1,9 @@
+"""
+Calculate the sum of the squares of elements in a list.
+
+Args:
+    x (list[int]): A list of integers.
+
+Returns:
+    int: The sum of the squares of the elements in the input list.
+"""

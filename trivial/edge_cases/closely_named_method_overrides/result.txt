@@ -1,0 +1,22 @@
+"""
+Summary:
+Returns a list of all prime numbers less than or equal to self.n using the Sieve of Eratosthenes algorithm.
+
+Parameters:
+None
+
+Returns:
+list[int]: A list of integers representing the prime numbers less than or equal to self.n.
+
+Description:
+This method initializes a boolean list `primes` of length self.n + 1, setting all elements to True. 
+It iterates through the numbers starting from 2 up to the square root of self.n. 
+For each number p, if primes[p] is True, it marks all multiples of p as False in the primes list. 
+Finally, it returns a list of all numbers that remain marked as True in the `primes` list, 
+which are the prime numbers less than or equal to self.n.
+
+Notes:
+- The boolean list `primes` serves as a flag indicator for each number, denoting whether it is a prime (True) or not (False).
+- The algorithm starts with the assumption that all numbers in list are prime.
+- The method uses the property that a non-prime number must have a divisor less than or equal to its square root, optimizing the search for primes.
+"""

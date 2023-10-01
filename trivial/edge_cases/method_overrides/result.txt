@@ -1,0 +1,20 @@
+"""
+Brief:
+    Returns a list of all prime numbers less than self.n using a segmented sieve algorithm.
+
+Parameters:
+    None
+
+Returns:
+    list[int]: A list containing all prime numbers less than self.n.
+
+Algorithm:
+    1. Calculate the limit as the square root of self.n.
+    2. Use simple_sieve to find all primes up to the limit.
+    3. Segment the range [limit, self.n] and filter primes in each.
+
+Example Usage:
+    >>> obj = ClassExample(50)
+    >>> print(obj.sieve_of_eratosthenes())
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+"""

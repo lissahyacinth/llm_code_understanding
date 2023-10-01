@@ -1,0 +1,2 @@
+Write a function description docstring for modify_series
+{{code}}

@@ -1,0 +1,12 @@
+"""
+Modifies a list of integers by squaring each element.
+Parameters:
+- items (list[int]): List of integers to be modified.
+
+Returns:
+- list[int]: New list of integers after applying the registered function.
+
+Example:
+>>> modify_list([1, 2, 3])
+[1, 4, 9]
+"""

@@ -1,0 +1,14 @@
+"""
+Computes a moving average of this series' values and returns a new TimeSeries.
+The returned series has the same length and time axis as `series`. (Note that this might create border effects).
+
+Parameters
+----------
+series
+    The a deterministic series to average
+
+Returns
+-------
+TimeSeries
+    A time series containing the average values
+"""
