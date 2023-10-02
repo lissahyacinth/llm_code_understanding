@@ -21,8 +21,8 @@ class EvaluationReply:
         except JSONDecodeError:
             raise RuntimeError("Failed to load JSON reply from LLM")
         return cls(
-            evaluation_response['previous_rating'],
-            evaluation_response['previous_grade_reasoning'],
-            evaluation_response['new_rating'],
-            evaluation_response['new_grade_reasoning']
+            evaluation_response["previous_rating"],
+            evaluation_response["previous_grade_reasoning"],
+            evaluation_response["new_rating"],
+            evaluation_response["new_grade_reasoning"],
         )

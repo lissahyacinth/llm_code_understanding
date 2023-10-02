@@ -30,7 +30,9 @@ class EvaluationPrompt(Prompt):
 }
 Ensure the response can be parsed by Python json.loads."""
 
-    def __init__(self, function_code: str, previous_documentation: str, new_documentation: str) -> None:
+    def __init__(
+        self, function_code: str, previous_documentation: str, new_documentation: str
+    ) -> None:
         self.function_code = function_code
         self.previous_documentation = previous_documentation
         self.new_documentation = new_documentation
@@ -42,5 +44,5 @@ Ensure the response can be parsed by Python json.loads."""
         return self._content_template.format(
             FUNCTION_CODE=self.function_code,
             PREVIOUS_DOCUMENTATION=self.previous_documentation,
-            NEW_DOCUMENTATION=self.new_documentation
+            NEW_DOCUMENTATION=self.new_documentation,
         )

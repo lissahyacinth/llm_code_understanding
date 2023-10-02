@@ -12,6 +12,4 @@ class OpenAIConfig:
     @classmethod
     @lru_cache(maxsize=1)
     def from_env(cls) -> OpenAIConfig:
-        return cls(
-            os.environ.get("OPENAI_EVALUATION_MODEL", "gpt-4")
-        )
+        return cls(os.environ.get("OPENAI_EVALUATION_MODEL", "gpt-4"))

@@ -7,3 +7,8 @@ torch
 isort
 mypy
 black
+tqdm
+sentencepiece
+requests
+protobuf
+numpy

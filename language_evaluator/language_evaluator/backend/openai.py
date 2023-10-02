@@ -1,14 +1,19 @@
+import json
 import logging
 import uuid
-from typing import TypeVar, TypedDict, Literal
+from typing import Literal, TypedDict, TypeVar
 
 import aiohttp
 from dotenv import load_dotenv
 
-from language_evaluator.backend.generic import LLMInterface
+from language_evaluator.backend.generic import LLMInterface, PromptReply
 from language_evaluator.prompt import Prompt
 
-load_dotenv(r"D:\ShareableAI\automodeldocs\.env")
+try:
+    load_dotenv()
+    # Attempt load - but it's non-critical
+except BaseException:
+    pass
 
 import openai
 from tenacity import retry, stop_after_attempt, wait_random_exponential
@@ -44,26 +49,24 @@ class OpenAIRawResponse(TypedDict):
 
 
 async def reformat_json(text: str) -> str:
-    return (
-        await chat_completion_request(
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You reformat text into valid JSON. You do not add comments or messages.",
-                },
-                {"role": "user", "content": text},
-            ],
-            model="gpt-3.5-turbo",
-        )
+    return await chat_completion_request(
+        messages=[
+            {
+                "role": "system",
+                "content": "You reformat text into valid JSON. You do not add comments or messages.",
+            },
+            {"role": "user", "content": text},
+        ],
+        model="gpt-3.5-turbo",
     )
 
 
 @retry(wait=wait_random_exponential(multiplier=1, max=40), stop=stop_after_attempt(3))
 async def chat_completion_request(
-        messages: list[OpenAIInputMessage],
-        functions: str | None = None,
-        function_call: str | None = None,
-        model: str = OpenAIConfig.from_env().evaluation_model,
+    messages: list[OpenAIInputMessage],
+    functions: str | None = None,
+    function_call: str | None = None,
+    model: str = OpenAIConfig.from_env().evaluation_model,
 ) -> str:
     request_uuid = uuid.uuid4()
     assert openai.api_key is not None
@@ -80,9 +83,9 @@ async def chat_completion_request(
         logger.info(f"[{request_uuid}] Started Chat Completion Request")
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                    "https://api.openai.com/v1/chat/completions",
-                    headers=headers,
-                    json=json_data,
+                "https://api.openai.com/v1/chat/completions",
+                headers=headers,
+                json=json_data,
             ) as response:
                 formatted_response: OpenAIRawResponse = await response.json()
                 logger.info(f"[{request_uuid}] Finished Chat Completion Request")
@@ -100,13 +103,18 @@ class OpenAIBackend(LLMInterface):
     def __init__(self, model: OPENAI_MODELS):
         self.model = model
 
-    async def prompt(self, prompt: Prompt) -> str:
-        return await chat_completion_request(
-            messages=[
-                {"role": "system", "content": prompt.system_message()},
-                {"role": "user", "content": prompt.user_message()}
-            ],
+    def name(self) -> str:
+        return f"OpenAI-{self.model}"
+
+    async def prompt(self, prompt: Prompt) -> PromptReply:
+        formatted_prompt = [
+            {"role": "system", "content": prompt.system_message()},
+            {"role": "user", "content": prompt.user_message()},
+        ]
+        response = await chat_completion_request(
+            messages=formatted_prompt,
             functions=None,
             function_call=None,
-            model=self.model
+            model=self.model,
         )
+        return PromptReply(json.dumps(formatted_prompt), response)
