@@ -1,0 +1,14 @@
+openai
+accelerate
+transformers
+python-dotenv
+-i https://download.pytorch.org/whl/cu117
+torch
+isort
+mypy
+black
+tqdm
+sentencepiece
+requests
+protobuf
+numpy

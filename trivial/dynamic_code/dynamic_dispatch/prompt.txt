@@ -1,2 +1,0 @@
-Write a function description docstring for modify_list
-{{code}}
