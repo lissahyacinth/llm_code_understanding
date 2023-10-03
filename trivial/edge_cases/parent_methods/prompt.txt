@@ -1,2 +1,0 @@
-Write a method description docstring for class ClassExample.sieve_of_eratosthenes
-{{code}}
