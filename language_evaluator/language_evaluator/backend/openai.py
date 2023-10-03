@@ -107,7 +107,7 @@ class OpenAIBackend(LLMInterface):
         return f"OpenAI-{self.model}"
 
     async def prompt(self, prompt: Prompt) -> PromptReply:
-        formatted_prompt = [
+        formatted_prompt: list[OpenAIInputMessage] = [
             {"role": "system", "content": prompt.system_message()},
             {"role": "user", "content": prompt.user_message()},
         ]

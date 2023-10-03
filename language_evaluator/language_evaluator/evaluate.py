@@ -18,7 +18,7 @@ class ModelAnswer:
 
 
 async def generate_all_answers(
-        prompts: list[tuple[str, CodeSamplePrompt]],
+    prompts: list[tuple[str, CodeSamplePrompt]],
 ) -> list[ModelAnswer]:
     model_backend: LLMInterface
     model_answers: list[ModelAnswer] = []
@@ -40,15 +40,15 @@ async def generate_all_answers(
 
 
 async def grade_all_answers(
-        answers: list[tuple[str, ModelAnswer]]
+    answers: list[ModelAnswer]
 ) -> list[tuple[ModelAnswer, EvaluationReply]]:
     evaluation_backend = OpenAIBackend("gpt-4")
     replies: list[tuple[ModelAnswer, EvaluationReply]] = []
-    for (model_answer, answer) in answers:
+    for answer in answers:
         eval_prompt = EvaluationPrompt(
             function_code=answer.prompt.user_message(),
-            previous_documentation=model_answer,
-            new_documentation=answer.reply
+            previous_documentation=answer.ideal_answer,
+            new_documentation=answer.reply,
         )
         grade = await evaluation_backend.prompt(eval_prompt)
         formatted_grade = EvaluationReply.from_string_reply(grade.reply)
