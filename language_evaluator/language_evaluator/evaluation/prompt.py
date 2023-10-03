@@ -7,6 +7,8 @@ class EvaluationPrompt(Prompt):
     _system: str = """Your role is to evaluate prospective new documentation for a provided function and assess whether
  it is an improvement or regression from the existing documentation.
  
+ If the new documentation is identical to the previous documentation, rate it a F.
+ 
  Function code will be provided to you, as well as the previous documentation, and the new documentation.
 """
 

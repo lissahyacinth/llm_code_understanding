@@ -13,6 +13,10 @@ class CodeExample:
     _result: str
     _lineno: int  # Split point for prefix/suffix
 
+    @property
+    def ideal_answer(self) -> str:
+        return self._result
+
     @classmethod
     def load_from_directory(cls, directory_path: pathlib.Path) -> CodeExample:
         if not directory_path.exists() or not directory_path.is_dir():
