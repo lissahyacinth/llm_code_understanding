@@ -18,7 +18,7 @@ def evaluate(example_directory: str):
         or not formatted_example_directory.is_dir()
     ):
         raise ValueError(f"Could not find a directory at {example_directory}")
-    examples = list(load_test_examples(formatted_example_directory))
+    examples = list(load_test_examples(formatted_example_directory))[0:1]
     answers = asyncio.run(
         generate_all_answers(
             [(test.ideal_answer, test.as_prompt()) for test in examples]
@@ -28,7 +28,7 @@ def evaluate(example_directory: str):
     model_answer: ModelAnswer
     evaluation: EvaluationReply
     for model_answer, evaluation in graded_answers:
-        print(f"{model_answer.model_name} replied with {model_answer.reply}")
+        print(f"{model_answer.model_name} replied with {model_answer.reply.reply}")
         print(
             f"This answer received a grade of {evaluation.new_rating} due to {evaluation.new_grade_reasoning}"
         )

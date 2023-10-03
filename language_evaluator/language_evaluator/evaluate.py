@@ -1,7 +1,7 @@
 import asyncio
 from dataclasses import dataclass
 
-from language_evaluator.backend.generic import LLMInterface
+from language_evaluator.backend.generic import LLMInterface, PromptReply
 from language_evaluator.backend.openai import OpenAIBackend
 from language_evaluator.backend.xwin import XWinBackend
 from language_evaluator.code_sample.prompt import CodeSamplePrompt
@@ -14,7 +14,7 @@ class ModelAnswer:
     model_name: str
     prompt: CodeSamplePrompt
     ideal_answer: str
-    reply: str
+    reply: PromptReply
 
 
 async def generate_all_answers(
@@ -27,7 +27,7 @@ async def generate_all_answers(
         OpenAIBackend("gpt-4"),
         XWinBackend(),
     ]:
-        model_replies: list[str] = await asyncio.gather(
+        model_replies: list[PromptReply] = await asyncio.gather(
             *(model_backend.prompt(prompt) for (_ideal_answer, prompt) in prompts)
         )
         model_answers.extend(
