@@ -1,14 +1,14 @@
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "language-evaluator"
 version = "0.1.0"
 description = ""
-authors = ["Lissa Hyacinth <lissahyacinth@gmail.com>"]
+authors = [{ name = "Lissa Hyacinth", email = "lissahyacinth@gmail.com"}]
 readme = "README.md"
-packages = [{include = "language_evaluator"}]
 dynamic = ["dependencies"]
+
 [tool.setuptools.dynamic]
-dependencies = {file = ["requirements.txt"]}
+dependencies = {file = "requirements.txt"}
